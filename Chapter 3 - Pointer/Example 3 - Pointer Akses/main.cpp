@@ -3,14 +3,18 @@
 using namespace std;
 
 int main() {
-    float x, *px; // inisialisasi variabel x beserta pointernya
+    int x, y;
+    int *px; // pointer yang menunjuk variabel bertipe integer
 
-    x = 54.6;
-    cout << "Isi variabel x semula " << x << endl;
+    x = 87;
+    px = &x; // pointer px berisi alamat memori dari variabel x
+    y = *px; // variabel ya berisi nilai yang ditunjuk oleh pointer px
 
-    px = &x;
-    *px = *px + 10;
-    cout << "Isi variabel x sekarang " << x << endl;
+    cout << "Alamat variabel x = " << &x << endl;
+    cout << "Isi pointer px = " << px << endl;
+    cout << "Nilai variabel x = " << x << endl;
+    cout << "Nilai yang ditunjuk oleh pointer px = " << *px << endl;
+    cout << "Nilai y = " << y << endl;
 
     //cout << "Hello world!" << endl;
     return 0;

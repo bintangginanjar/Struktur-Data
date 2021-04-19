@@ -7,15 +7,15 @@ struct TNode {
     TNode *next;    // field pointer
 };
 
-TNode *head, *tail; // deklarasi variabel pointer head untuk menunjukkan kepala node
+TNode *head; // deklarasi variabel pointer head untuk menunjukkan kepala node
 
 void init() {
     head = NULL; // inisialisasi linked list kosong (tanpa node sama sekali)
-    tail = NULL;
+    //tail = NULL;
 }
 
 int isEmpty() {
-    if (tail == NULL) {
+    if (head == NULL) {
         return 1;   // kembalikan 1 kalau linked list masih kosong
     } else {
         return 0;   // kembalikan 0 kalau linked list sudah ada isinya
@@ -23,17 +23,17 @@ int isEmpty() {
 }
 
 void insertDepan(int dataBaru) {
-    TNode *nodeBaru;
+    TNode *nodeBaru;        // step 1. buatlah node baru
     nodeBaru = new TNode;
 
-    nodeBaru->data = dataBaru;
-    nodeBaru->next = NULL;
+    nodeBaru->data = dataBaru;  // step 2. input data yang diinginkan di node yang baru
+    nodeBaru->next = NULL;      // node belum disambungkan ke linked list
 
-    if (isEmpty() == 1) {
-        head = tail = nodeBaru;
-        tail->next=NULL;
+    if (isEmpty() == 1) {       // step 3. cek apakah linked list masih kosong atau tidak
+        head = nodeBaru;        // kondisi 1. linked list masih kosong sehingga pointer head kita pindahkan ke node yang baru
+        head->next = NULL;
     } else {
-        nodeBaru->next = head;
+        nodeBaru->next = head;  // kondisi 2. linked list sudah terbentuk sehingga node yang baru menjadi kepala dari linked list
         head = nodeBaru;
     }
 
@@ -41,19 +41,23 @@ void insertDepan(int dataBaru) {
 }
 
 void insertBelakang(int dataBaru) {
-    TNode *nodeBaru, *nodeBantu;
+    TNode *nodeBaru, *nodeBantu;    // step 1. buatlah node baru dan node bantu
     nodeBaru = new TNode;
 
-    nodeBaru->data = dataBaru;
-    nodeBaru->next = NULL;
+    nodeBaru->data = dataBaru;  // step 2. input data yang diinginkan di node yang baru
+    nodeBaru->next = NULL;      // node belum disambungkan ke linked list
 
-    if (isEmpty() == 1) {
-        head = nodeBaru;
-        tail = nodeBaru;
-        tail->next = NULL;
+    if (isEmpty() == 1) {   // step 3. cek apakah linked list masih kosong atau tidak
+        head = nodeBaru;    // kondisi 1. linked list masih kosong sehingga pointer head kita pindahkan ke node yang baru
+        head->next = NULL;
     } else {
-        tail->next = nodeBaru;
-        tail = nodeBaru;
+        nodeBantu = head;   // kondisi 2. linked list sudah terbentuk, tempatkan nodeBantu di head sebagai awal tracing
+
+        while (nodeBantu->next != NULL) {   // lakukan looping dengan menggunakan variabel bantu untuk mencari ekor dari linked list
+            nodeBantu = nodeBantu->next;    // ekor dari linked list ditunjukkan dengan pointer next = NULL
+        }
+
+        nodeBantu->next = nodeBaru; // keluar looping, ekor linked list disambungkan ke node yang baru
     }
 
     cout << "Data " << dataBaru << " masuk sebagai node paling belakang" << endl;
@@ -64,14 +68,14 @@ void hapusDepan() {
     int d;
 
     if (isEmpty() == 0) {
-        if (head != tail) {
+        if(head->next != NULL){
             hapus = head;
             d = hapus->data;
             head = head->next;
             delete hapus;
         } else {
-            d = tail->data;
-            head = tail = NULL;
+            d = head->data;
+            head = NULL;
         }
     cout << "Data " << d << " terhapus" << endl;
     } else {
@@ -83,21 +87,19 @@ void hapusBelakang() {
     TNode *hapus,*nodeBantu;
     int d;
 
-    if (isEmpty() == 0) {
-        nodeBantu = head;
-
-        if (head != tail) {
-            while (nodeBantu->next != tail) {
+    if (isEmpty()==0) {
+        if(head->next != NULL){
+            nodeBantu = head;
+            while(nodeBantu->next->next!=NULL){
                 nodeBantu = nodeBantu->next;
             }
-            hapus = tail;
-            tail = nodeBantu;
+            hapus = nodeBantu->next;
             d = hapus->data;
+      		nodeBantu->next = NULL;
             delete hapus;
-            tail->next = NULL;
         } else {
-            d = tail->data;
-            head = tail = NULL;
+            d = head->data;
+            head = NULL;
         }
         cout << "Data " << d << " terhapus" << endl;
     } else {
@@ -109,7 +111,7 @@ void hapusSemua() {
     TNode *nodeBantu, *hapus;
     nodeBantu = head;
 
-    while (nodeBantu != NULL) {
+    while(nodeBantu != NULL) {
         hapus = nodeBantu;
         nodeBantu = nodeBantu->next;
         delete hapus;
@@ -140,7 +142,6 @@ int main() {
         cout<<" \n"<<endl;
         cout<<" ============================"<<endl;
         cout<<" =   PROGRAM LINKED LIST    ="<<endl;
-        cout<<" =        HEAD & TAIL       ="<<endl;
         cout<<" ============================"<<endl;
         cout<<" = 1. Insert Depan          ="<<endl;
         cout<<" = 2. Insert Belakang       ="<<endl;

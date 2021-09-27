@@ -15,9 +15,12 @@ Hour getHour(Clock c);
 Minute getMinute(Clock c);
 Second getSecond(Clock c);
 
-void setHour(Clock &c, int newHH);
-void setMinute(Clock &c, int newMM);
-void setSecond(Clock &c, int newSS);
+Clock makeClock(int hh, int mm, int ss);
+bool isValid(int hh, int mm, int ss);
+
+void setHour(Clock c, int newHH);
+void setMinute(Clock c, int newMM);
+void setSecond(Clock c, int newSS);
 
 bool isEqual(Clock c1, Clock c2);
 Clock addClock(Clock c1, Clock c2);

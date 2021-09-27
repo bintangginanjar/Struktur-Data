@@ -5,13 +5,12 @@ using namespace std;
 
 int main() {
 
-    Clock c1;
-    setHour(c1, 23);
-    setMinute(c1, 59);
-    setSecond(c1, 59);
+    Clock c1 = makeClock(23, 59, 59);
+    Clock c2 = makeClock(2, 23, 23);
 
-    cout << getHour(c1) << ":" << getMinute(c1) << ":" << getSecond(c1) << endl;
+    printClock(c1);
+    cout << endl;
+    printClock(c2);
 
-    //cout << "Hello world!" << endl;
     return 0;
 }
